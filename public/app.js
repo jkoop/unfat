@@ -184,6 +184,7 @@
 
     const map = [
       [".food-cal", entry.calories_kcal, 0],
+      [".food-water", entry.water_g, 0],
       [".food-salt", entry.salt_mg, 0],
       [".food-sugar", entry.sugar_g, 1],
       [".food-fibre", entry.fibre_g, 1],

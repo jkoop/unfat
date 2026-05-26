@@ -54,6 +54,7 @@ function migrate(db: Database) {
       ollama_description TEXT,
 
       calories_kcal REAL,
+      water_g REAL,
       salt_mg REAL,
       sugar_g REAL,
       fibre_g REAL,
@@ -70,6 +71,7 @@ function migrate(db: Database) {
       vitamin_b12_mcg REAL,
 
       ai_calories_kcal REAL,
+      ai_water_g REAL,
       ai_salt_mg REAL,
       ai_sugar_g REAL,
       ai_fibre_g REAL,
@@ -132,9 +134,18 @@ function migrate(db: Database) {
     )
   `);
 
+  ensureColumn(db, "food_entries", "water_g", "REAL");
+  ensureColumn(db, "food_entries", "ai_water_g", "REAL");
+
   // Default settings
   db.run(`INSERT OR IGNORE INTO settings (key, value) VALUES ('ollama_url', 'http://localhost:11434')`);
   db.run(`INSERT OR IGNORE INTO settings (key, value) VALUES ('ollama_model', 'llava')`);
+}
+
+function ensureColumn(db: Database, table: string, column: string, definition: string) {
+  const existing = db.query<{ name: string }, []>(`PRAGMA table_info(${table})`).all();
+  if (existing.some((row) => row.name === column)) return;
+  db.run(`ALTER TABLE ${table} ADD COLUMN ${column} ${definition}`);
 }
 
 async function seed(db: Database) {
@@ -187,6 +198,7 @@ export type FoodEntry = {
   ollama_status: string;
   ollama_description: string | null;
   calories_kcal: number | null;
+  water_g: number | null;
   salt_mg: number | null;
   sugar_g: number | null;
   fibre_g: number | null;
@@ -202,6 +214,7 @@ export type FoodEntry = {
   vitamin_e_mg: number | null;
   vitamin_b12_mcg: number | null;
   ai_calories_kcal: number | null;
+  ai_water_g: number | null;
   ai_salt_mg: number | null;
   ai_sugar_g: number | null;
   ai_fibre_g: number | null;
@@ -241,6 +254,7 @@ export type WeightEntry = {
 
 export const NUTRIENT_FIELDS = [
   "calories_kcal",
+  "water_g",
   "salt_mg",
   "sugar_g",
   "fibre_g",
@@ -261,6 +275,7 @@ export type NutrientField = (typeof NUTRIENT_FIELDS)[number];
 
 export const NUTRIENT_LABELS: Record<NutrientField, string> = {
   calories_kcal: "Calories (kcal)",
+  water_g: "Water (g)",
   salt_mg: "Salt (mg)",
   sugar_g: "Sugar (g)",
   fibre_g: "Fibre (g)",

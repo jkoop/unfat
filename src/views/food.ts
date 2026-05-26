@@ -39,6 +39,7 @@ export function foodListPage(opts: {
       <td style="max-width:140px;overflow:hidden;text-overflow:ellipsis">${e.description ? escHtml(e.description) : `<span class="muted">—</span>`}</td>
       <td>${statusBadge(e.ollama_status)}</td>
       <td class="food-cal">${e.ollama_status === "done" || e.calories_kcal !== null ? fmt(e.calories_kcal, 0) : "—"}</td>
+      <td class="food-water">${fmt(e.water_g, 0)}</td>
       <td class="food-salt">${fmt(e.salt_mg, 0)}</td>
       <td class="food-sugar">${fmt(e.sugar_g)}</td>
       <td class="food-fibre">${fmt(e.fibre_g)}</td>
@@ -81,6 +82,7 @@ ${entries.length === 0 ? `
         <th>Description</th>
         <th>Status</th>
         <th>kcal</th>
+        <th>Water g</th>
         <th>Salt mg</th>
         <th>Sugar g</th>
         <th>Fibre g</th>
@@ -151,7 +153,7 @@ export function foodEditPage(opts: {
   savedTemp?: string | null;
 }): string {
   const { user, entry } = opts;
-  const hasAi = entry.ai_calories_kcal !== null;
+  const hasAi = NUTRIENT_FIELDS.some(f => entry[`ai_${f}` as keyof FoodEntry] !== null);
 
   const nutrientInputs = NUTRIENT_FIELDS.map(f => `
     <div class="form-group">

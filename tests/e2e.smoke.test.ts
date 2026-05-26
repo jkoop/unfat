@@ -174,6 +174,7 @@ test("food forms: create, edit, revert, delete", async () => {
 
   const foodEditPage = await request(`/food/${foodId}/edit`, { session: adminSession });
   expect(foodEditPage.status).toBe(200);
+  expect(await foodEditPage.text()).toContain("Water (g)");
 
   const foodEdit = await request(`/food/${foodId}/edit`, {
     method: "POST",
@@ -182,6 +183,7 @@ test("food forms: create, edit, revert, delete", async () => {
       taken_at: "2026-05-25T20:15",
       description: "Updated test meal split",
       calories_kcal: "450",
+      water_g: "120",
       salt_mg: "600",
       sugar_g: "12",
       fibre_g: "5",

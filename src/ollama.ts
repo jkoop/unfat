@@ -7,6 +7,7 @@ const TIMEOUT_MS = 10 * 60 * 1000; // 10 minutes
 export type OllamaResult = {
   description: string;
   calories_kcal: number | null;
+  water_g: number | null;
   salt_mg: number | null;
   sugar_g: number | null;
   fibre_g: number | null;
@@ -29,6 +30,7 @@ Respond ONLY with a JSON object (no markdown, no extra text) in exactly this for
 {
   "description": "Brief description of what you see",
   "calories_kcal": <number or null>,
+  "water_g": <number or null>,
   "salt_mg": <number or null>,
   "sugar_g": <number or null>,
   "fibre_g": <number or null>,
@@ -88,6 +90,7 @@ export async function analyzeImage(photoPath: string): Promise<OllamaResult> {
     const result: OllamaResult = {
       description: String(parsed.description ?? ""),
       calories_kcal: toNum(parsed.calories_kcal),
+      water_g: toNum(parsed.water_g),
       salt_mg: toNum(parsed.salt_mg),
       sugar_g: toNum(parsed.sugar_g),
       fibre_g: toNum(parsed.fibre_g),

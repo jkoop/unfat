@@ -3,3 +3,4 @@ data/
 *.db
 bun.lockb
 .env
+docker-compose.override.yml
