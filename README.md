@@ -99,6 +99,25 @@ Important: password reset is admin-only (there is no self-service reset flow).
 - desktop supports drag-and-drop image upload
 - shows an offline message if your connection drops
 
+## To Run Locally
+
+From the project root:
+
+```bash
+docker compose up --build
+```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+To run without Docker (requires [Bun](https://bun.sh)):
+
+```bash
+bun install
+bun src/index.ts
+```
+
+The app listens on port `3000` by default (override with the `PORT` environment variable).
+
 ## First Login
 
 On first run, the default admin account is:
