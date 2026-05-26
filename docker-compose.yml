@@ -1,0 +1,14 @@
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    volumes:
+      - unfat_data:/app/data
+    environment:
+      - DATA_DIR=/app/data
+      - PORT=3000
+    restart: unless-stopped
+
+volumes:
+  unfat_data:

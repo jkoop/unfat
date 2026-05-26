@@ -1,0 +1,24 @@
+{
+  "name": "Unfat",
+  "short_name": "Unfat",
+  "description": "Track food, drink, sleep, and weight quickly.",
+  "display": "standalone",
+  "start_url": "/food",
+  "scope": "/",
+  "background_color": "#111111",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "/icon-192.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
